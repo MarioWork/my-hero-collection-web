@@ -4,3 +4,7 @@
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
 }
+
+.row {
+    --bs-gutter-x: 0rem!important;
+}
