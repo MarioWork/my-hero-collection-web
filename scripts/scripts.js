@@ -1,6 +1,7 @@
 var posterImgPrefix = 'https://image.tmdb.org/t/p/w300';
 var backdropImgPrefix = 'https://image.tmdb.org/t/p/original';
 import apiKey from "./secrets.js";
+apiKey = process.env.API_KEY;
 console.log(apiKey);
 $(document).ready(function() {
     getUpcomingMovies();
