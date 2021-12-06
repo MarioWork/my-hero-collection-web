@@ -297,7 +297,7 @@ $RECYCLE.BIN/
 *.lnk
 
 #Ignore secrets
-secrets.js
+/.env
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,intellij+all,intellij+iml,macos,windows,visualstudiocode
 

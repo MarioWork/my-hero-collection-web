@@ -1,8 +1,8 @@
 var posterImgPrefix = 'https://image.tmdb.org/t/p/w300';
 var backdropImgPrefix = 'https://image.tmdb.org/t/p/original';
+
 import apiKey from "./secrets.js";
-apiKey = process.env.API_KEY;
-console.log(apiKey);
+
 $(document).ready(function() {
     getUpcomingMovies();
     getReleaseMovies();
@@ -22,7 +22,7 @@ function initMovieOverview(event) {
 function getReleaseMovies() {
     // start the AJAX request
     var url = 'https://api.themoviedb.org/3/discover/movie?api_key=' + apiKey + '&sort_by=primary_release_date.desc&page=1&primary_release_date.lte=' + getDateString() + '&with_companies=420';
-    console.log('Realased Movies: ' + url);
+    //console.log('Realased Movies: ' + url);
 
     // perform an ajax http get request
     $.ajax({
@@ -45,7 +45,7 @@ function errorCallback(request, status, error) {
 function getUpcomingMovies() {
     // start the AJAX request
     var url = 'https://api.themoviedb.org/3/discover/movie?api_key=' + apiKey + '&sort_by=primary_release_date.asc&page=1&primary_release_date.gte=' + getDateString() + '&with_companies=420';
-    console.log('Upcoming Movies: ' + url);
+    //console.log('Upcoming Movies: ' + url);
 
     // perform an ajax http get request
     $.ajax({
@@ -63,6 +63,7 @@ function successUpcomingMoviesCallback(response) {
 
 function getMovieOverviewActors(movieID) {
     var url = 'https://api.themoviedb.org/3/movie/' + movieID + '/credits?api_key=' + apiKey;
+    //console.log("Movie Overview Actors: "+url);
 
     // perform an ajax http get request
     $.ajax({
@@ -79,9 +80,8 @@ function successMovieOverviewActorsCallback(response) {
 }
 
 function getMovieOverview(movieID) {
-
-
     var url = 'https://api.themoviedb.org/3/movie/' + movieID + '?api_key=' + apiKey;
+    //console.log("Movie Overview: " + url);
 
     // perform an ajax http get request
     $.ajax({
