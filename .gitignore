@@ -296,5 +296,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+#Ignore secrets
+secrets.js
+
 # End of https://www.toptal.com/developers/gitignore/api/intellij,intellij+all,intellij+iml,macos,windows,visualstudiocode
 
