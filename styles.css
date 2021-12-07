@@ -8,3 +8,15 @@
 .row {
     --bs-gutter-x: 0rem!important;
 }
+
+.backbutton-span {
+    top: 5%;
+    left: 2%;
+    font-size: 3rem;
+    color: white;
+    z-index: 2;
+}
+
+.backbutton-span:hover {
+    color: red;
+}

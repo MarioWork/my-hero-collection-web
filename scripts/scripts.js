@@ -7,12 +7,12 @@ $(document).ready(function() {
     getUpcomingMovies();
     getReleaseMovies();
 
-    var backbutton = document.getElementById('back-button');
-    backbutton.addEventListener('click', goBack);
+    var backbutton = $('#back-button');
+    backbutton.click(goBack);
 });
 
 function initMovieOverview(event) {
-    var movieID = getMovieIDfromCard(event.target);
+    var movieID = getMovieIDfromCard($(event.target));
     getMovieOverview(movieID);
     getMovieOverviewActors(movieID);
 }
@@ -35,7 +35,7 @@ function getReleaseMovies() {
 
 function successReleasedMoviesCallback(response) {
     var releaseContainer = $('#released-cards-container');
-    populateCards(response.results, releaseContainer, 'release');
+    populateCards(response.results, releaseContainer, 'released');
 }
 
 function errorCallback(request, status, error) {
@@ -106,38 +106,39 @@ function sucessMovieOverviewCallback(response) {
 
 function populateCards(data, parentElement, listType) {
     data.forEach(item => {
-        var cardDiv = document.createElement("div");
+        var cardDiv = $("<div></div>");
         cardDiv.id = "cardDiv";
-        cardDiv.classList.add('col-12', 'col-lg-2', 'card', 'shadow-sm', 'p-3', 'mb-5', 'bg-body', 'rounded', 'me-5');
-        cardDiv.style = "cursor:pointer;"
-        cardDiv.addEventListener('click', initMovieOverview);
+        cardDiv.attr('class', 'col-12 col-lg-2 card shadow-sm p-3 mb-5 bg-body rounded me-5');
+        cardDiv.attr('id', 'cardDiv')
+        cardDiv.css('cursor', 'pointer');
+        cardDiv.click(initMovieOverview);
 
 
-        var cardImg = document.createElement("img");
-        cardImg.src = posterImgPrefix + item.poster_path;
-        cardImg.classList.add('card-img');
-        cardImg.alt = 'Movie Poster';
+        var cardImg = $("<img/>");
+        cardImg.attr('src', posterImgPrefix + item.poster_path);
+        cardImg.attr('class', 'card-img');
+        cardImg.attr('alt', 'Movie Poster');
         cardDiv.append(cardImg);
 
-        var cardBodyDiv = document.createElement("div");
-        cardBodyDiv.classList.add("card-body");
+        var cardBodyDiv = $("<div></div>");
+        cardBodyDiv.attr('class', 'card-body');
         cardDiv.append(cardBodyDiv);
 
-        var movieTitle = document.createElement("p");
-        movieTitle.innerHTML = item.title;
-        movieTitle.classList.add("h5", "h-50");
+        var movieTitle = $("<p></p>");
+        movieTitle.text(item.title);
+        movieTitle.attr('class', 'h5 h-50');
         cardBodyDiv.append(movieTitle);
 
-        var movieID = document.createElement("p");
-        movieID.innerHTML = item.id;
-        movieID.classList.add("d-none");
-        movieID.id = "movieID";
+        var movieID = $("<p></p>");
+        movieID.text(item.id);
+        movieID.attr('class', 'd-none');
+        movieID.attr('id', 'movieID');
         cardBodyDiv.append(movieID);
 
         if (listType === 'upcoming') {
-            var releaseDate = document.createElement("p");
-            releaseDate.innerHTML = convertDateFormat(item.release_date);
-            releaseDate.classList.add("h6", "h-50", "d-flex", "align-items-end");
+            var releaseDate = $("<p></p>");
+            releaseDate.text(convertDateFormat(item.release_date));
+            releaseDate.attr('class', 'h6 h-50 d-flex align-items-end');
             cardBodyDiv.append(releaseDate);
         }
 
@@ -146,60 +147,52 @@ function populateCards(data, parentElement, listType) {
 }
 
 function populateMovieOverview(data) {
-    var movieBackgroundImg = $('#backgroundImage')[0];
-    var posterOverview = $('#posterOverview')[0];
-    var movieTitle = $('#movieTitle')[0];
-    var movieOverview = $('#movieOverview')[0];
-    var movieDate = $('#movieDate')[0];
-    var movieGenres = $('#movieGenres')[0];
-
-    movieBackgroundImg.src = backdropImgPrefix + data.backdrop_path;
-    posterOverview.src = posterImgPrefix + data.poster_path;
-    movieTitle.innerHTML = data.original_title;
-    movieOverview.innerHTML = data.overview;
-    movieDate.innerHTML = convertDateFormat(data.release_date);
+    $($('#backgroundImage')[0]).attr('src', backdropImgPrefix + data.backdrop_path);;
+    $($('#posterOverview')[0]).attr('src', posterImgPrefix + data.poster_path);
+    $($('#movieTitle')[0]).text(data.original_title);
+    $($('#movieOverview')[0]).text(data.overview);
+    $($('#movieDate')[0]).text(convertDateFormat(data.release_date));
 
     var genres = '';
     data.genres.forEach(item => {
         genres += item.name + ', ';
     });
 
-    movieGenres.innerHTML = genres;
+    $($('#movieGenres')[0]).text(genres);
 
 }
 
 function populateMovieOverviewActors(data, parentElement) {
 
     data.forEach(item => {
-        var cardDiv = document.createElement("div");
-        cardDiv.id = "cardDiv";
-        cardDiv.classList.add('col-12', 'col-lg-2', 'card', 'shadow-sm', 'p-3', 'mb-5', 'bg-body', 'rounded', 'me-5');
+        var cardDiv = $("<div></div>");
+        cardDiv.attr('id', 'cardDiv');
+        cardDiv.attr('class', 'col-12 col-lg-2 card shadow-sm p-3 mb-5 bg-body rounded me-5');
 
-        var actorName = document.createElement("p");
-        actorName.innerHTML = item.name;
-        actorName.classList.add("h5", "h-50", "fw-bold");
+        var actorName = $("<p></p>");
+        actorName.text(item.name);
+        actorName.attr('class', 'h5 h-50 fw-bold');
         cardDiv.append(actorName);
 
-        var cardImg = document.createElement("img");
-        cardImg.style = "object-fit:contain;"
-        cardImg.classList.add("card-img");
-        cardImg.src = posterImgPrefix + item.profile_path;
-        cardImg.alt = 'Actor Image';
+        var cardImg = $("<img/>");
+        cardImg.css('object-fit', 'contain');
+        cardImg.attr('class', 'card-img');
+        cardImg.attr('src', posterImgPrefix + item.profile_path);
+        cardImg.attr('alt', 'Actor Image');
         cardDiv.append(cardImg);
 
-        var cardBodyDiv = document.createElement("div");
-        cardBodyDiv.classList.add("card-body");
+        var cardBodyDiv = $("<div></div>");
+        cardBodyDiv.attr('class', 'card-body');
         cardDiv.append(cardBodyDiv);
 
-        var actorCharacter = document.createElement("p");
-        actorCharacter.innerHTML = convertDateFormat(item.character);
-        actorCharacter.classList.add("h6", "h-50", "d-flex", "align-items-end");
+        var actorCharacter = $("<p></p>");
+        actorCharacter.text(convertDateFormat(item.character));
+        actorCharacter.attr('class', 'h6 h-50 d-flex align-items-end');
         cardBodyDiv.append(actorCharacter);
 
         parentElement.append(cardDiv);
     });
 }
-
 
 //Util Functions
 function goBack() {
@@ -213,17 +206,16 @@ function convertDateFormat(str) {
 
 function getMovieIDfromCard(target) {
 
-
     //Find the parent cardDiv
     while (true) {
-        if (target.id == "cardDiv") {
+        if ($(target).attr('id') === "cardDiv") {
             break;
         }
 
-        target = target.parentElement;
+        target = $(target).parent();
     }
 
-    var movieID = target.children[1].children[1].innerHTML;
+    var movieID = $($($(target).children()[1]).children()[1]).text();
     return movieID;
 }
 
